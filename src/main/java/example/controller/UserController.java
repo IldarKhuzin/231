@@ -5,10 +5,7 @@ import example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,15 +39,15 @@ public class UserController {
         return "redirect:/";
     }
 
-    @RequestMapping("/edit/{id}")
-    public String editUser(@PathVariable(value = "id") Long id, Model model) {
+    @RequestMapping(value="/edit", method = RequestMethod.GET)
+    public String editUser(@RequestParam Long id, Model model) {
         User user = userService.getById(id);
         model.addAttribute("user", user);
         return "user-edit";
     }
 
-    @RequestMapping(value = "/delete/{id}")
-    public String deleteUser(@PathVariable Long id) {
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String deleteUser(@RequestParam Long id){
         userService.delete(id);
         return "redirect:/";
     }
